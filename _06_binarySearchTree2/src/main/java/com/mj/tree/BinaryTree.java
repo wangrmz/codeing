@@ -175,7 +175,32 @@ public class BinaryTree<E> implements BinaryTreeInfo {
 		// node == node.parent.right
 		return node.parent;
 	}
-	
+
+	/**
+	 * 获取前驱节点：指的是中序遍历的前一个节点
+	 * 中序遍历 ：left-root-right
+	 * 不对外提供
+	 * 可以借助二叉搜索树来理解，因为二叉搜索树中序遍历是按照胜序或者降序
+	 * 比如：1，2，3，4，5，6，7，8，9，10，11，12，13
+	 * 求8的前驱节点：绝对是左子树最大的一个节点，也就是前一个比他小的节点
+	 * 先找到左子树，在一直往右找，才能找到距离最近的那个
+	 *                             7
+	 *                     5                 12
+	 *                 3       6        10        13
+	 *             2     4          8       11
+	 *         1                       9
+	 *
+	 *         上图 8的前驱结点为7 ，分析：
+	 *         1、先找8的左子树，左子树为空；node.left==null
+	 *         2、前驱节点在其父节点或者祖父节点中  前驱节点必然在左子树中
+	 *            且当前节点必然位于其父节点的左子树中
+	 *            node.parent!=null && node==node.parent.left
+	 *            当 node=12
+	 *            node.parent==7,但是node.parent.left==5此时已经不满足了，也就说此时找到了8的前驱节点也就是7
+	 *
+	 * @param node
+	 * @return
+	 */
 	protected Node<E> successor(Node<E> node) {
 		if (node == null) return null;
 		
